@@ -30,7 +30,6 @@ body {
   font-family: "Nunito Sans", sans-serif;
   overflow-x: hidden;
 }
-
 /* ===========================
    HERO SECTION
 =========================== */
@@ -553,55 +552,103 @@ body {
   .stats-strip { border-radius:12px; }
   .strip-item { padding:14px; }
 }
+
+.navbar {
+    background-color: #1565c0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 20px;
+    position: fixed;   /* 👈 CAMBIO CLAVE */
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 9999;     /* 👈 Asegura que quede encima */
+}
 </style>
 </head>
 <body>
 <style>
-    .navbar {
-        background-color: #0d47a1;
-        padding: 15px 30px;
+
+/* NAVBAR */
+.navbar {
+    background-color: #1565c0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 20px;
+    position: relative;
+}
+
+.logo {
+    color: white;
+    font-size: 18px;
+    font-weight: bold;
+}
+
+/* LINKS */
+.nav-links {
+    display: flex;
+    gap: 25px;
+}
+
+.nav-links a {
+    color: white;
+    text-decoration: none;
+    font-weight: 500;
+}
+
+/* BOTÓN MENÚ */
+.menu-toggle {
+    display: none;
+    font-size: 26px;
+    color: white;
+    cursor: pointer;
+}
+
+/* RESPONSIVE */
+@media (max-width: 768px) {
+
+    .menu-toggle {
+        display: block;
+    }
+
+    .nav-links {
+        display: none;
+        flex-direction: column;
+        background-color: #1565c0;
+        position: absolute;
+        top: 60px;
+        right: 0;
+        width: 200px;
+        padding: 15px;
+        border-radius: 0 0 0 10px;
+    }
+
+    .nav-links.active {
         display: flex;
-        justify-content: space-between;
-        align-items: center;
-        font-family: Arial, sans-serif;
     }
-
-    .navbar .logo {
-        color: white;
-        font-size: 20px;
-        font-weight: bold;
-    }
-
-    .navbar ul {
-        list-style: none;
-        display: flex;
-        gap: 25px;
-        margin: 0;
-        padding: 0;
-    }
-
-    .navbar ul li a {
-        text-decoration: none;
-        color: white;
-        font-weight: 500;
-        transition: 0.3s;
-    }
-
-    .navbar ul li a:hover {
-        color: #90caf9;
-    }
+}
 </style>
 
-<div class="navbar">
+<nav class="navbar">
     <div class="logo">🏆 Torneo 2026</div>
-    <ul>
-        <li><a href="index.html">Inicio</a></li>
-        <li><a href="fixture.html">Fixture</a></li>
-        <li><a href="dashboard.html">Ranking</a></li>
-        <li><a href="reglas.html">Reglas</a></li>
-    </ul>
-</div>
 
+    <div class="menu-toggle" onclick="toggleMenu()">☰</div>
+
+    <div class="nav-links" id="navLinks">
+        <a href="index.html">Inicio</a>
+        <a href="fixture.html">Fixture</a>
+        <a href="dashboard.html">Ranking</a>
+        <a href="reglas.html">Reglas</a>
+    </div>
+</nav>
+
+<script>
+function toggleMenu() {
+    document.getElementById("navLinks").classList.toggle("active");
+}
+</script>
 
 <!-- HERO -->
 <section class="hero">
@@ -793,25 +840,25 @@ A3kMTuc+y03LKKYPvqU8TGKKO5tIXD59N2l4IAAN2EBmi3wbtW6cYXKCECKcPr+0rwAgGeJerf0Dgt9i
     </div>
 
     <div class="nav-cards">
-      <a href="#" class="nav-card reveal">
+      <a href="https://docs.google.com/forms/d/e/1FAIpQLSff4qjzsA3tyK-IuASthalXKfL-LAAtH5eZtxQXaVZBm1A35g/viewform" target="_blank"  class="nav-card reveal">
         <div class="nav-card-icon">📋</div>
         <div class="nav-card-title">Mis Pronósticos</div>
         <div class="nav-card-desc">Ingresa tus predicciones antes del inicio de cada partido</div>
         <div class="nav-card-arrow">→</div>
       </a>
-      <a href="#" class="nav-card reveal">
+      <a href="dashboard.html" class="nav-card reveal">
         <div class="nav-card-icon">🏆</div>
         <div class="nav-card-title">Ranking en Vivo</div>
         <div class="nav-card-desc">Posiciones actualizadas en tiempo real. ¿Dónde estás tú?</div>
         <div class="nav-card-arrow">→</div>
       </a>
-      <a href="#" class="nav-card reveal">
+      <a href="fixture.html" class="nav-card reveal">
         <div class="nav-card-icon">🗓</div>
         <div class="nav-card-title">Fixture</div>
         <div class="nav-card-desc">Calendario completo: grupos, fechas y estadios del Mundial</div>
         <div class="nav-card-arrow">→</div>
       </a>
-      <a href="#" class="nav-card reveal">
+      <a href="reglas.html" class="nav-card reveal">
         <div class="nav-card-icon">📖</div>
         <div class="nav-card-title">Reglamento</div>
         <div class="nav-card-desc">Sistema de puntos, reglas y premios del torneo</div>
