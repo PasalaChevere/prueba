@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admin - Ingresar Resultados · Mundial 2026</title>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Nunito+Sans:wght@300;400;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --navy:  #2B3990;
+  --navy2: #1E2A72;
+  --navy5: #131c58;
+  --gold:  #F5A623;
+  --gold2: #e8951a;
+  --white: #FFFFFF;
+  --off:   #E8EDF8;
+  --muted: #8892BE;
+  --green: #2FD37A;
+  --red:   #FF5A5A;
+  --border: rgba(255,255,255,0.08);
+}
+* { margin:0; padding:0; box-sizing:border-box; }
+html { scroll-behavior: smooth; }
+body {
+  background: var(--navy2);
+  color: var(--white);
+  font-family: "Nunito Sans", sans-serif;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+
+body::before {
+  content:""; position:fixed; inset:0;
+  background:
+    radial-gradient(ellipse at 5% 20%, rgba(245,166,35,0.06) 0%, transparent 50%),
+    radial-gradient(ellipse at 95% 80%, rgba(47,211,122,0.04) 0%, transparent 45%);
+  pointer-events:none; z-index:0;
+}
+
+.container {
+  position: relative;
+  z-index: 1;
+  max-width: 600px;
+  width: 100%;
+  background: rgba(43,57,144,0.3);
+  backdrop-filter: blur(20px);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 40px;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+}
+
+.lock-icon {
+  width: 50px;
+  height: 50px;
+  margin: 0 auto 20px;
+  background: var(--gold);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 24px;
+}
+
+h1 {
+  font-family: "Nunito", sans-serif;
+  font-size: 28px;
+  font-weight: 900;
+  text-align: center;
+  margin-bottom: 8px;
+  letter-spacing: -0.5px;
+}
+
+.subtitle {
+  text-align: center;
+  color: var(--muted);
+  font-size: 14px;
+  margin-bottom: 32px;
+}
+
+.form-group {
+  margin-bottom: 24px;
+}
+
+label {
+  display: block;
+  font-weight: 600;
+  font-size: 14px;
+  margin-bottom: 8px;
+  color: var(--off);
+}
+
+.required {
+  color: var(--gold);
+  margin-left: 4px;
+}
+
+select, input[type="number"], input[type="password"], input[type="text"] {
+  width: 100%;
+  padding: 12px 16px;
+  background: rgba(19,28,88,0.5);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  color: var(--white);
+  font-family: "Nunito Sans", sans-serif;
+  font-size: 14px;
+  transition: all 0.3s;
+}
+
+select:focus, input:focus {
+  outline: none;
+  border-color: var(--gold);
+  background: rgba(19,28,88,0.8);
+}
+
+select {
+  cursor: pointer;
+}
+
+.row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+.optional-label {
+  color: var(--muted);
+  font-size: 12px;
+  font-weight: 400;
+  margin-left: 8px;
+}
+
+button {
+  width: 100%;
+  padding: 16px;
+  background: linear-gradient(135deg, var(--gold) 0%, var(--gold2) 100%);
+  border: none;
+  border-radius: 8px;
+  color: var(--navy5);
+  font-family: "Nunito", sans-serif;
+  font-size: 16px;
+  font-weight: 800;
+  cursor: pointer;
+  transition: all 0.3s;
+  margin-top: 8px;
+}
+
+button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(245,166,35,0.4);
+}
+
+button:active {
+  transform: translateY(0);
+}
+
+button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.message {
+  margin-top: 20px;
+  padding: 16px;
+  border-radius: 8px;
+  font-size: 14px;
+  display: none;
+}
+
+.message.success {
+  background: rgba(47,211,122,0.15);
+  border: 1px solid var(--green);
+  color: var(--green);
+}
+
+.message.error {
+  background: rgba(255,90,90,0.15);
+  border: 1px solid var(--red);
+  color: var(--red);
+}
+
+.message.show {
+  display: block;
+}
+
+.loading {
+  display: none;
+  text-align: center;
+  color: var(--muted);
+  margin-top: 12px;
+}
+
+.loading.show {
+  display: block;
+}
+
+.footer {
+  text-align: center;
+  margin-top: 32px;
+  font-size: 12px;
+  color: var(--muted);
+}
+</style>
+</head>
+<body>
+
+<div class="container">
+  <div class="lock-icon">🔐</div>
+  
+  <h1>Panel de Administración</h1>
+  <div class="subtitle">Ingreso de Resultados · Mundial 2026</div>
+
+  <form id="resultForm">
+    
+    <div class="form-group">
+      <label>Partido<span class="required">*</span></label>
+      <select id="partido" required>
+        <option value="">-- Seleccionar partido --</option>
+      </select>
+    </div>
+
+    <div class="row">
+      <div class="form-group">
+        <label>Goles Equipo A<span class="required">*</span></label>
+        <input type="number" id="golesA" min="0" max="20" required>
+      </div>
+      <div class="form-group">
+        <label>Goles Equipo B<span class="required">*</span></label>
+        <input type="number" id="golesB" min="0" max="20" required>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label>
+        Clasificado
+        <span class="optional-label">(solo para partidos KO con empate)</span>
+      </label>
+      <input type="text" id="clasificado" placeholder="Nombre del equipo clasificado">
+    </div>
+
+    <div class="form-group">
+      <label>Contraseña de Admin<span class="required">*</span></label>
+      <input type="password" id="password" required placeholder="Ingresa tu contraseña">
+    </div>
+
+    <button type="submit" id="submitBtn">
+      ⚽ Guardar Resultado
+    </button>
+
+    <div class="loading" id="loading">Guardando...</div>
+    <div class="message" id="message"></div>
+  </form>
+
+  <div class="footer">
+    🏆 Torneo Pronósticos Mundial 2026<br>
+    Powered by Pásala Chévere
+  </div>
+</div>
+
+<script>
+// 🔥 CONFIGURACIÓN - Actualiza esta URL con tu Apps Script
+const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycby0LJ6ucjqEekqbaKgxPs51Xii4NofstCJHRJwVdQiL5gnQALjE_4CQh65adBWw36DJZg/exec';
+
+// Cargar partidos al inicio
+document.addEventListener('DOMContentLoaded', loadPartidos);
+
+async function loadPartidos() {
+  try {
+    const response = await fetch(`${SCRIPT_URL}?action=getPartidos`);
+    const data = await response.json();
+    
+    const select = document.getElementById('partido');
+    
+    if (data.success && data.partidos) {
+      data.partidos.forEach(partido => {
+        const option = document.createElement('option');
+        option.value = partido.matchID;
+        option.textContent = `${partido.matchID} | ${partido.equipoA} vs ${partido.equipoB} | ${partido.fecha}`;
+        option.dataset.esKO = partido.esKO;
+        select.appendChild(option);
+      });
+    }
+  } catch (error) {
+    console.error('Error cargando partidos:', error);
+  }
+}
+
+// Enviar resultado
+document.getElementById('resultForm').addEventListener('submit', async (e) => {
+  e.preventDefault();
+  
+  const matchID = document.getElementById('partido').value;
+  const golesA = document.getElementById('golesA').value;
+  const golesB = document.getElementById('golesB').value;
+  const clasificado = document.getElementById('clasificado').value;
+  const password = document.getElementById('password').value;
+  
+  const btn = document.getElementById('submitBtn');
+  const loading = document.getElementById('loading');
+  const message = document.getElementById('message');
+  
+  // UI feedback
+  btn.disabled = true;
+  loading.classList.add('show');
+  message.classList.remove('show');
+  
+  try {
+    const response = await fetch(SCRIPT_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        action: 'saveResult',
+        matchID,
+        golesA: parseInt(golesA),
+        golesB: parseInt(golesB),
+        clasificado: clasificado || null,
+        password
+      })
+    });
+    
+    const data = await response.json();
+    
+    if (data.success) {
+      message.textContent = `✅ ${data.message}`;
+      message.className = 'message success show';
+      document.getElementById('resultForm').reset();
+    } else {
+      message.textContent = `❌ ${data.message}`;
+      message.className = 'message error show';
+    }
+    
+  } catch (error) {
+    message.textContent = '❌ Error de conexión. Verifica tu internet.';
+    message.className = 'message error show';
+  } finally {
+    btn.disabled = false;
+    loading.classList.remove('show');
+  }
+});
+
+// Mostrar/ocultar campo clasificado según tipo de partido
+document.getElementById('partido').addEventListener('change', (e) => {
+  const selected = e.target.selectedOptions[0];
+  const esKO = selected?.dataset.esKO === 'SI';
+  const clasificadoGroup = document.getElementById('clasificado').closest('.form-group');
+  clasificadoGroup.style.display = esKO ? 'block' : 'none';
+});
+</script>
+
+</body>
+</html>
